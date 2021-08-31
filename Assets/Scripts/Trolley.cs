@@ -12,7 +12,11 @@ public class Trolley : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-       foreach(GameObject obj in canTakePrefabs)
-            if(obj == collision.gameObject)
+        foreach (GameObject obj in canTakePrefabs)
+            if (obj == collision.gameObject)
+            {
+                collectedObjectEvent?.Invoke();
+                break;
+            }
     }
 }
