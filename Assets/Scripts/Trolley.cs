@@ -5,18 +5,22 @@ using UnityEngine.Events;
 
 public class Trolley : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> canTakePrefabs;
+    [SerializeField] private List<SpriteRenderer> canTakePrefabs;
 
     public UnityEvent collectedObjectEvent;
     public UnityEvent notCollectedObjectEvent;
+    public UnityEvent getDamageEvent;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        foreach (GameObject obj in canTakePrefabs)
-            if (obj == collision.gameObject)
+        foreach (SpriteRenderer obj in canTakePrefabs)
+            if (obj.sprite == collision.gameObject.GetComponent<SpriteRenderer>().sprite)
             {
                 collectedObjectEvent?.Invoke();
                 break;
             }
+
+        if (collision.gameObject.GetComponent<Bomb>())
+            getDamageEvent?.Invoke();
     }
 }
